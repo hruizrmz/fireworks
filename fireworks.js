@@ -10,7 +10,7 @@ function setup() {
 	ctx = canvas.getContext("2d");
 	ctx.fillStyle = "transparent";
 	ctx.fillRect(0, 0, width, height);
-	//fireworks.push(new Firework(Math.random()*(width-200)+100));
+	fireworks.push(new Firework(Math.random()*(width-200)+100));
 	window.addEventListener("resize",windowResized);
 	document.addEventListener("click",onClick);
 }
@@ -22,12 +22,12 @@ function loop(){
 
 	ctx.globalAlpha = 0.1;
 	ctx.fillStyle = "black";
-	ctx.fillRect(0, 0, 500, 500);
+	ctx.fillRect(0, 0, width, height);
 	ctx.globalAlpha = 1;
 
 	for(let i=0; i<fireworks.length; i++){
 		let done = fireworks[i].update();
-		fireworks[i].draw();
+        fireworks[i].draw();
         if(done) fireworks.splice(i, 1);
     }
     
@@ -37,9 +37,10 @@ function loop(){
         if(particles[i].lifetime>80) particles.splice(i,1);
     }
 
-    if (loopCount < 1300) {
-        if (loopCount%100 == 0) fireworks.push(new Firework(Math.random()*(width-200)+100));
+    if (loopCount < 1400) {
+        if (loopCount%200 == 0) fireworks.push(new Firework(Math.random()*(width-200)+100));
     }
+
 }
 setInterval(loop, 1/60);
 
@@ -65,7 +66,8 @@ class Particle{
 		ctx.globalAlpha = Math.max(1-this.lifetime/80, 0);
 		ctx.fillStyle = this.col;
         ctx.fillRect(this.x, this.y, 2, 2);
-	}
+    }
+    
 }
 
 class Firework{
@@ -83,15 +85,15 @@ class Firework{
 			for(let i=0; i<60; i++){
 				particles.push(new Particle(this.x, this.y, this.col))
 			}
-		}
+        }
 		return this.isBlown;
 	}
 
 	draw(){
 		ctx.globalAlpha = 1;
 		ctx.fillStyle = this.col;
-		ctx.fillRect(this.x, this.y, 2, 2);
-	}
+        ctx.fillRect(this.x, this.y, 2, 2);
+    }
 }
 
 function randomCol(){
