@@ -12,7 +12,7 @@ function setup() {
 	ctx.fillRect(0, 0, width, height);
 	fireworks.push(new Firework(Math.random()*(width-200)+100));
 	window.addEventListener("resize",windowResized);
-	document.addEventListener("click",onClick);
+	document.addEventListener("click",onClick); // Instead of on-click it would be when a user gets all questions right for example
 }
 
 setTimeout(setup,1);
